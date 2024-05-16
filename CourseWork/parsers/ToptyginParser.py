@@ -5,13 +5,13 @@ import codecs
 
 
 def parse_product_page(url):
-    page = codecs.open("page2.html", "r", "utf_8")
+    # page = codecs.open("page2.html", "r", "utf_8")
 
     # Подключение к браузеру для получения полной HTML-страницы (Работает!)
-    # driver = webdriver.Chrome()
-    # driver.get(url)
-    # page = driver.page_source
-    # driver.quit()
+    driver = webdriver.Chrome()
+    driver.get(url)
+    page = driver.page_source
+    driver.quit()
 
     # Парсим страницу
     soup = BeautifulSoup(page, "html.parser")
@@ -57,4 +57,4 @@ def parse_all():
     parse_product_page(url)
 
 
-parse_all()
+# parse_all()
