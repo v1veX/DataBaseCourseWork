@@ -1,12 +1,9 @@
 from bs4 import BeautifulSoup
-import requests
 from selenium import webdriver
-import codecs
+from parsers import csv_writer
 
 
-def parse_product_page(url):
-    # page = codecs.open("page2.html", "r", "utf_8")
-
+def parse_product_page(url, otg: bool = False):
     # Подключение к браузеру для получения полной HTML-страницы (Работает!)
     driver = webdriver.Chrome()
     driver.get(url)
@@ -23,9 +20,10 @@ def parse_product_page(url):
     safe_layer = 0
     fire_safety_class = "Не указан"
     brand = "Не указан"
+    image_url = ""
 
     # Непосредственно ищем данные
-    name = soup.find("h1").text
+    name = soup.find("h1").text.strip()
     price = int(soup.find(class_="product-item-detail-unit-price").find("span").text)
     prop_list = soup.find_all(class_="product-item-detail-properties-item")
     for prop in prop_list:
@@ -34,27 +32,46 @@ def parse_product_page(url):
         if prop_name == "Толщина, мм":
             thickness = float(prop.find(class_="product-item-detail-properties-value").text.replace(",", "."))
         elif prop_name == "Бренд":
-            brand = prop.find(class_="product-item-detail-properties-value").text
+            brand = prop.find(class_="product-item-detail-properties-value").text.strip()
         elif prop_name == "Защитный слой, мм":
             safe_layer = float(prop.find(class_="product-item-detail-properties-value").text.replace(",", "."))
         elif prop_name == "Ширина, см":
             width = int(prop.find(class_="product-item-detail-properties-value").text)
         elif prop_name == "Класс пожарной опасности":
-            fire_safety_class = prop.find(class_="product-item-detail-properties-value").text
+            fire_safety_class = prop.find(class_="product-item-detail-properties-value").text.strip()
+    image_url = f"https://polov.net{soup.find(class_="product-item-detail-slider-image").find("img").get("src")}"
 
-    # Вывод для отладки (тут будет запись в csv файл или что-то подобное)
-    print(f"Наименование: {name}")
-    print(f"Цена: {price} р./пог. м.")
-    print(f"Бренд: {brand}")
-    print(f"Ширина, см: {width}")
-    print(f"Толщина, мм: {thickness}")
-    print(f"Толщина защитного слоя, мм: {safe_layer}")
-    print(f"Класс пожарной безопасности: {fire_safety_class}")
+    data = [name, price, width, thickness, safe_layer, fire_safety_class, brand, url, image_url]
+
+    # Запись в CSV файл
+    # Каждый раз добавляется новая запись. Если вдруг сайт забанит по IP, то уже спарсенные данные останутся
+    csv_writer.write('parsers/toptygin.csv', data)
+
+    # Вывод для отладки
+    if otg:
+        print(data)
 
 
-def parse_all():
-    url = "https://polov.net/catalog/commercial/linoleum_emerald_standart_shir_2m/"
-    parse_product_page(url)
+def parse_all(otg: bool = False):
+    start_url = 'https://polov.net/catalog/linoleum/?PAGEN_1='
+    links = []
+
+    # Парсим ссылки на продукты из каталога
+    for i in range(1, 2):
+        driver = webdriver.Chrome()
+        driver.get(start_url + str(i))
+        page = driver.page_source
+        driver.quit()
+
+        soup = BeautifulSoup(page, "html.parser")
+        link_items = soup.find_all(class_='product-item-image-wrapper')
+        for item in link_items:
+            link = f"https://polov.net{item.get('href')}"
+            links.append(link)
+
+    # Парсим продукты по каждой ссылке
+    for link in links:
+        parse_product_page(link, otg)
 
 
 # parse_all()
