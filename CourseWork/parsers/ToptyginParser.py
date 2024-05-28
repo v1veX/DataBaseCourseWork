@@ -45,7 +45,7 @@ def parse_product_page(url, otg: bool = False):
 
     # Запись в CSV файл
     # Каждый раз добавляется новая запись. Если вдруг сайт забанит по IP, то уже спарсенные данные останутся
-    csv_writer.write('parsers/toptygin.csv', data)
+    csv_writer.write('toptygin.csv', data)
 
     # Вывод для отладки
     if otg:
@@ -57,7 +57,7 @@ def parse_all(otg: bool = False):
     links = []
 
     # Парсим ссылки на продукты из каталога
-    for i in range(1, 2):
+    for i in range(2, 3):
         driver = webdriver.Chrome()
         driver.get(start_url + str(i))
         page = driver.page_source
@@ -74,4 +74,4 @@ def parse_all(otg: bool = False):
         parse_product_page(link, otg)
 
 
-# parse_all()
+# parse_all(True)
