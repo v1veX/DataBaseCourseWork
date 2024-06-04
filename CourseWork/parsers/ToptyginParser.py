@@ -13,14 +13,14 @@ def parse_product_page(url, otg: bool = False):
     # Парсим страницу
     soup = BeautifulSoup(page, "html.parser")
 
-    name = ""
+    name = None
     price = 0
     width = 0
     thickness = 0
     safe_layer = 0
-    fire_safety_class = "Не указан"
-    brand = "Не указан"
-    image_url = ""
+    fire_safety_class = None
+    brand = None
+    image_url = None
 
     # Непосредственно ищем данные
     name = soup.find("h1").text.strip()
@@ -52,12 +52,12 @@ def parse_product_page(url, otg: bool = False):
         print(data)
 
 
-def parse_all(otg: bool = False):
+def parse_catalog(otg: bool = False):
     start_url = 'https://polov.net/catalog/linoleum/?PAGEN_1='
     links = []
 
     # Парсим ссылки на продукты из каталога
-    for i in range(2, 3):
+    for i in range(1, 3):
         driver = webdriver.Chrome()
         driver.get(start_url + str(i))
         page = driver.page_source
@@ -74,4 +74,4 @@ def parse_all(otg: bool = False):
         parse_product_page(link, otg)
 
 
-# parse_all(True)
+# parse_catalog(True)
