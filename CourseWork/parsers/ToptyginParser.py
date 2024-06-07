@@ -57,7 +57,7 @@ def parse_catalog(otg: bool = False):
     links = []
 
     # Парсим ссылки на продукты из каталога
-    for i in range(1, 3):
+    for i in range(2, 3):
         driver = webdriver.Chrome()
         driver.get(start_url + str(i))
         page = driver.page_source
@@ -74,4 +74,4 @@ def parse_catalog(otg: bool = False):
         parse_product_page(link, otg)
 
 
-# parse_catalog(True)
+parse_catalog(True)
