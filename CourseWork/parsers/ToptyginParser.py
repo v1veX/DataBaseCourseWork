@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 from selenium import webdriver
-from my_libs import csv_writer
+from parsers import csv_rw
 
 
 def parse_product_page(url, otg: bool = False):
@@ -45,7 +45,7 @@ def parse_product_page(url, otg: bool = False):
 
     # Запись в CSV файл
     # Каждый раз добавляется новая запись. Если вдруг сайт забанит по IP, то уже спарсенные данные останутся
-    csv_writer.write('toptygin.csv', data)
+    csv_rw.write('toptygin.csv', data)
 
     # Вывод для отладки
     if otg:

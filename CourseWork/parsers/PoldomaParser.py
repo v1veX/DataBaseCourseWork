@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import time
-from my_libs import csv_writer
+from parsers import csv_rw
 
 
 def parse_product_page(url, otg: bool = False, num: int = None):
@@ -45,7 +45,7 @@ def parse_product_page(url, otg: bool = False, num: int = None):
     data = [name, price, width, thickness, safe_layer, fire_safety_class, brand, url, image_url]
 
     # Запись в CSV файл
-    csv_writer.write('poldoma.csv', data)
+    csv_rw.write('poldoma.csv', data)
 
     # Вывод для отладки
     if otg:
