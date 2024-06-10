@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 from selenium import webdriver
-from parsers import csv_writer
+from my_libs import csv_writer
 
 
 def parse_product_page(url, otg: bool = False):
