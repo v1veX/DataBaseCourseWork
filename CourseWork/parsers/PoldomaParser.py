@@ -4,7 +4,7 @@ import time
 from parsers import csv_writer
 
 
-def parse_product_page(url, otg: bool = False):
+def parse_product_page(url, otg: bool = False, num: int = None):
     # Получаем HTML-код
     page = requests.get(url)
 
@@ -36,7 +36,8 @@ def parse_product_page(url, otg: bool = False):
         elif prop_title == 'Класс пожаробезопасности':
             fire_safety_class = prop.find(class_='char_value').find('span').text.strip()
 
-    brand = name.split('"')[1]  # Извлекаем бренд, т.к. отдельно он нигде не прописан
+    if '"' in name:
+        brand = name.split('"')[1]  # Извлекаем бренд, т.к. отдельно он нигде не прописан
     name = name.replace('"', '')  # Убираем кавычки (они не нужны)
     price = int(price * width / 100)  # Переводим цену за м2 в цену за погонный метр
     image_url = f'https://vladivostok.pol-doma.com{soup.find(class_="popup_link").get("href")}'
@@ -48,11 +49,12 @@ def parse_product_page(url, otg: bool = False):
 
     # Вывод для отладки
     if otg:
-        print(data)
+        print(num, data)
 
 
 def parse_catalog(otg: bool = False):
     start_url = 'https://vladivostok.pol-doma.com/catalog/napolnye_pokrytiya/linoleum/?PAGEN_1='
+    count = 1
 
     for i in range(1, 94):
         links = []
@@ -65,7 +67,8 @@ def parse_catalog(otg: bool = False):
             links.append(link)
 
         for link in links:
-            parse_product_page(link, otg)
+            parse_product_page(link, otg, count)
+            count += 1
             time.sleep(3)  # Защита от бана по IP
 
         time.sleep(5)  # Защита от бана по IP
