@@ -21,6 +21,7 @@
         </section>
         <!-- <section class="filters container"></section> -->
         <section class="products container">
+            <h2 class="visually-hidden">Список товаров</h2>
             <ul class="products__list">
                 {% for item in products %}
                 <li class="products__item">
@@ -34,7 +35,9 @@
                             />
                             <div class="product__header-content">
                                 <h3 class="product__name" title="{{ item.name }}">{{ item.name }}</h3>
+                                {% if item.brand != '' %}
                                 <div class="product__brand">Бренд: {{ item.brand }}</div>
+                                {% endif %}
                                 <div class="small-container">
                                     <div class="product__price">{{ item.price }} руб/пог.м.</div>
                                     <a href="{{ item.link }}" class="product__link" target="_blank">В магазин</a>
@@ -56,10 +59,12 @@
                                     <span class="property__name">Толщина защитного слоя:</span>
                                     <span class="property__value">{{ item.safe_layer }} мм</span>
                                 </li>
+                                {% if item.fire_safety != '' %}
                                 <li class="product__properties-item property">
                                     <span class="property__name">Класс пожарной безопасности:</span>
                                     <span class="property__value">{{ item.fire_safety }}</span>
                                 </li>
+                                {% endif %}
                             </ul>
                         </div>
                     </article>
