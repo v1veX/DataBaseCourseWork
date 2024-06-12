@@ -1,0 +1,73 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Каталог</title>
+    <link rel="stylesheet" href="{% static 'main/styles/styles.css' %}">
+</head>
+<body>
+    <header class="header">
+        <div class="header__inner container">
+            <div class="logo">Купи Линолеум</div>
+        </div>
+    </header>
+    <main class="content">
+        <section class="top container">
+            <h1 class="page-title">Каталог</h1>
+        </section>
+        <!-- <section class="filters container"></section> -->
+        <section class="products container">
+            <ul class="products__list">
+                {% for item in products %}
+                <li class="products__item">
+                    <article class="product">
+                        <header class="product__header">
+                            <img 
+                                src="{{ item.photo }}"
+                                alt="Фото {{ item.name }}"
+                                class="product__image"
+                                width="100" height="100" loading="lazy"
+                            />
+                            <div class="product__header-content">
+                                <h3 class="product__name" title="{{ item.name }}">{{ item.name }}</h3>
+                                <div class="product__brand">Бренд: {{ item.brand }}</div>
+                                <div class="small-container">
+                                    <div class="product__price">{{ item.price }} руб/пог.м.</div>
+                                    <a href="{{ item.link }}" class="product__link" target="_blank">В магазин</a>
+                                </div>
+                            </div>
+                        </header>
+                        <div class="product__properties">
+                            <div class="product__properties-title">Краткие характеристики</div>
+                            <ul class="product__properties-list">
+                                <li class="product__properties-item property">
+                                    <span class="property__name">Ширина:</span>
+                                    <span class="property__value">{{ item.width }} см</span>
+                                </li>
+                                <li class="product__properties-item property">
+                                    <span class="property__name">Толщина:</span>
+                                    <span class="property__value">{{ item.thickness }} мм</span>
+                                </li>
+                                <li class="product__properties-item property">
+                                    <span class="property__name">Толщина защитного слоя:</span>
+                                    <span class="property__value">{{ item.safe_layer }} мм</span>
+                                </li>
+                                <li class="product__properties-item property">
+                                    <span class="property__name">Класс пожарной безопасности:</span>
+                                    <span class="property__value">{{ item.fire_safety }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </article>
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
+    <!-- <footer class="footer"></footer> -->
+</body>
+</html>
