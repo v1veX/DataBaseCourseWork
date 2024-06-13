@@ -1,8 +1,8 @@
 import os
 import django
-
 from parsers import csv_rw
 from my_libs.name_reformer import reform_name
+from transliterate import translit
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "catalog.settings")
 django.setup()
@@ -15,7 +15,7 @@ counter = 0
 for file in file_paths:
     products = csv_rw.read_all(file)
     for item in products:
-        unique_name = reform_name(item[0])
+        unique_name = reform_name(translit(item[0], 'ru', reversed=True))
         obj = Product(
             name=item[0],
             price=int(item[1]),
@@ -33,6 +33,7 @@ for file in file_paths:
             existing_product = Product.objects.get(unique_name=unique_name)
             if existing_product.price > obj.price:
                 existing_product.price = obj.price
+                existing_product.name = obj.name
                 existing_product.link = obj.link
                 existing_product.photo = obj.photo
             if existing_product.fire_safety == '':

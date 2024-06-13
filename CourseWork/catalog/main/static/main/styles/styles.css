@@ -336,4 +336,9 @@ body {
     .product__price {
         font-size: 18px;
     }
+
+    .product__properties-list {
+        grid-template-columns: repeat(1, 1fr);
+        gap: 10px;
+    }
 }
