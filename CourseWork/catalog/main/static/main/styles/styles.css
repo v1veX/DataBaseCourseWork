@@ -328,4 +328,12 @@ body {
         width: 70%;
         height: auto;
     }
+
+    .product__name {
+    -webkit-line-clamp: 2;
+}
+
+    .product__price {
+        font-size: 18px;
+    }
 }

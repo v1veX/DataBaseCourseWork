@@ -11,6 +11,7 @@ class Product(models.Model):
     brand = models.CharField('Бренд', max_length=20, blank=True)
     link = models.CharField('Ссылка', max_length=200)
     photo = models.CharField('Фото', max_length=250)
+    unique_name = models.CharField('Уникальное имя', max_length=200, default='', blank=True)
 
     def __str__(self):
         return self.name
