@@ -15,7 +15,7 @@ counter = 0
 for file in file_paths:
     products = csv_rw.read_all(file)
     for item in products:
-        unique_name = reform_name(translit(item[0], 'ru', reversed=True))
+        unique_name = translit(reform_name(item[0]), 'ru', reversed=True)
         obj = Product(
             name=item[0],
             price=int(item[1]),
