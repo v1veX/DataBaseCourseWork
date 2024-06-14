@@ -7,7 +7,7 @@
 
     --font-family-base: Arial, sans-serif;
     --border-radius: 15px;
-    --border: 1px solid var(--color-accent);
+    --border: 1px solid var(--color-header);
     --container-padding-x: 20px;
     --container-width: 1200px;
     --header-height: 75px;
@@ -230,6 +230,51 @@ body {
     font-size: 35px;
 }
 
+.filters {
+  padding-bottom: 20px;
+}
+
+.filters__inner {
+  padding: 20px;
+  background-color: var(--color-white);
+  border-radius: var(--border-radius);
+}
+
+.filters__title {
+  font-size: 21px;
+  margin-bottom: 15px;
+}
+
+.filters__container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  column-gap: 15px;
+}
+
+.filters__label {
+  font-size: 16px;
+}
+
+.filters__selector {
+  padding-inline: 5px;
+  border: var(--border);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.filters__button {
+  padding: 5px 15px;
+  background-color: var(--color-header);
+  border: none;
+  border-radius: 5px;
+  color: var(--color-white);
+  cursor: pointer;
+}
+
+.filters__button:hover {
+  background-color: var(--color-accent);
+}
+
 .products {
     padding-bottom: 20px;
 }
@@ -309,6 +354,10 @@ body {
 
 .property {
     font-size: 16px;
+}
+
+.no-products-message {
+  padding-block: 20px;
 }
 
 @media (max-width: 950px) {

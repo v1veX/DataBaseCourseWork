@@ -19,7 +19,48 @@
         <section class="top container">
             <h1 class="page-title">Каталог</h1>
         </section>
-        <!-- <section class="filters container"></section> -->
+        <section class="filters container">
+            <div class="filters__inner">
+                <h2 class="filters__title">Сортировка и фильтры</h2>
+                <form class="filters__form" method="get">
+                    <div class="filters__container">
+                        <label for="sort_selector" class="filters__label">Сортировка</label>
+                        <label for="brand_selector" class="filters__label">Бренд</label>
+                        <label for="width_selector" class="filters__label">Ширина, см</label>
+                        <label for="thickness_selector" class="filters__label">Толщина, мм</label>
+                        <div></div>
+                        <select name="sort" id="sort_selector" class="filters__selector">
+                            <option value="" {% if sort_request == '' %}selected{% endif %}>По умолчанию</option>
+                            <option value="name" {% if sort_request == 'name' %}selected{% endif %}>По алфавиту (возрастание)</option>
+                            <option value="-name" {% if sort_request == '-name' %}selected{% endif %}>По алфавиту (убывание)</option>
+                            <option value="price" {% if sort_request == 'price' %}selected{% endif %}>По цене (возрастание)</option>
+                            <option value="-price" {% if sort_request == '-price' %}selected{% endif %}>По цене (убывание)</option>
+                        </select>
+                        <select name="brand" id="brand_selector" class="filters__selector">
+                            <option value="" {% if brand_request == '' %}selected{% endif %}>Не важно</option>
+                            {% for brand in brands %}
+                            {% if brand != '' %}
+                            <option value="{{ brand }}" {% if brand_request == brand %}selected{% endif %}>{{ brand }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                        <select name="width" id="width_selector" class="filters__selector">
+                            <option value="" {% if width_request == 0 %}selected{% endif %}>Не важно</option>
+                            {% for width in widths %}
+                            <option value="{{ width }}" {% if width_request == width %}selected{% endif %}>{{ width }}</option>
+                            {% endfor %}
+                        </select>
+                        <select name="thickness" id="thickness_selector" class="filters__selector">
+                            <option value="" {% if thickness_request == -1.0 %}selected{% endif %}>Не важно</option>
+                            {% for thickness in thicknesses %}
+                            <option value="{{ thickness }}" {% if thickness_request == thickness %}selected{% endif %}>{{ thickness }}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="filters__button">Применить</button>
+                    </div>
+                </form>
+            </div>
+        </section>
         <section class="products container">
             <h2 class="visually-hidden">Список товаров</h2>
             <ul class="products__list">
@@ -70,6 +111,9 @@
                     </article>
                 </li>
                 {% endfor %}
+                {% if products_length == 0 %}
+                <div class="no-products-message">Товары не найдены</div>
+                {% endif %}
             </ul>
         </section>
     </main>
