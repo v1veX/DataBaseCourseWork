@@ -356,8 +356,12 @@ body {
     font-size: 16px;
 }
 
-.no-products-message {
-  padding-block: 20px;
+.no-products-message, .products-amount {
+  padding-bottom: 20px;
+}
+
+.products-amount {
+    font-size: 16px;
 }
 
 @media (max-width: 950px) {

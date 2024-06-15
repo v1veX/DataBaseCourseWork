@@ -63,6 +63,11 @@
         </section>
         <section class="products container">
             <h2 class="visually-hidden">Список товаров</h2>
+            {% if products_length == 0 %}
+            <div class="no-products-message">Товары не найдены</div>
+            {% else %}
+            <div class="products-amount">Найдено {{ products_length }} товаров</div>
+            {% endif %}
             <ul class="products__list">
                 {% for item in products %}
                 <li class="products__item">
@@ -111,9 +116,6 @@
                     </article>
                 </li>
                 {% endfor %}
-                {% if products_length == 0 %}
-                <div class="no-products-message">Товары не найдены</div>
-                {% endif %}
             </ul>
         </section>
     </main>
