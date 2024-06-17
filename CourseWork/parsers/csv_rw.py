@@ -9,7 +9,7 @@ def write(filename, data):
 
 def read_all(filename):
     rows = []
-    with open(filename, 'r') as file:
+    with open(filename, 'r', encoding='utf-8') as file:
         reader = csv.reader(file, delimiter=';')
         for row in reader:
             rows.append(row)
