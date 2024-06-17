@@ -45,7 +45,7 @@ def parse_product_page(url, otg: bool = False):
 
     # Запись в CSV файл
     # Каждый раз добавляется новая запись. Если вдруг сайт забанит по IP, то уже спарсенные данные останутся
-    csv_rw.write('toptygin.csv', data)
+    csv_rw.write('data.csv', data)
 
     # Вывод для отладки
     if otg:
