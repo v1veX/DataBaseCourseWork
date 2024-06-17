@@ -27,14 +27,15 @@ def parse_product_page(url, otg: bool = False, num: int = None):
 
     for prop in prop_list:
         prop_title = prop.find(class_='char_name').find('span').text.strip()
+        prop_value = prop.find(class_='char_value').find('span').text.strip()
         if prop_title == 'Толщина,мм':
-            thickness = float(prop.find(class_='char_value').find('span').text.strip().replace(',', '.'))
+            thickness = float(prop_value.replace(',', '.'))
         elif prop_title == 'Толщина защитного слоя,мм':
-            safe_layer = float(prop.find(class_='char_value').find('span').text.strip().replace(',', '.'))
+            safe_layer = float(prop_value.replace(',', '.'))
         elif prop_title == 'Ширина,м':
-            width = int(float(prop.find(class_='char_value').find('span').text.strip().replace(',', '.')) * 100)  # Ширина в см
+            width = int(float(prop_value.replace(',', '.')) * 100)  # Ширина в см
         elif prop_title == 'Класс пожаробезопасности':
-            fire_safety_class = prop.find(class_='char_value').find('span').text.strip()
+            fire_safety_class = prop_value
 
     if '"' in name:
         brand = name.split('"')[1]  # Извлекаем бренд, т.к. отдельно он нигде не прописан

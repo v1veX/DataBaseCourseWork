@@ -27,28 +27,29 @@ def parse_product_page(url, otg: bool = False):
 
     for prop in prop_list:
         prop_title = prop.find(class_='properties__title').text.strip()
+        prop_value = prop.find(class_='properties__value').text
         if prop_title == 'Ширина':
-            width = prop.find(class_='properties__value').text.strip()
+            width = prop_value.strip()
             width = width.replace(',', '.')
             width = width.replace(' ', '')
             width = width.replace('м', '')
             width = int(float(width) * 100)
         elif prop_title == 'Толщина защитного слоя':
-            safe_layer = prop.find(class_='properties__value').text.strip()
+            safe_layer = prop_value.strip()
             safe_layer = safe_layer.replace(',', '.')
             safe_layer = safe_layer.replace(' ', '')
             safe_layer = safe_layer.replace('мм', '')
             safe_layer = float(safe_layer)
         elif prop_title == 'Общая толщина':
-            thickness = prop.find(class_='properties__value').text.strip()
+            thickness = prop_value.strip()
             thickness = thickness.replace(',', '.')
             thickness = thickness.replace(' ', '')
             thickness = thickness.replace('мм', '')
             thickness = float(thickness)
         elif prop_title == 'Класс пожарной безопасности':
-            fire_safety_class = prop.find(class_='properties__value').text.strip()
+            fire_safety_class = prop_value.strip()
         elif prop_title == 'Бренд':
-            brand = prop.find(class_='properties__value').text.strip()
+            brand = prop_value.strip()
     image_url = f"https://zalog-vostok.ru{soup.find(class_="detail-gallery-big__picture").get("src")}"
 
     data = [name, price, width, thickness, safe_layer, fire_safety_class, brand, url, image_url]

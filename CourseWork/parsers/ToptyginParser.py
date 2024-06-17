@@ -29,16 +29,17 @@ def parse_product_page(url, otg: bool = False):
     for prop in prop_list:
         prop_name = prop.find(class_="product-item-detail-properties-name").text
         prop_name = prop_name.replace(": ", "")
+        prop_value = prop.find(class_="product-item-detail-properties-value").text
         if prop_name == "Толщина, мм":
-            thickness = float(prop.find(class_="product-item-detail-properties-value").text.replace(",", "."))
+            thickness = float(prop_value.replace(",", "."))
         elif prop_name == "Бренд":
-            brand = prop.find(class_="product-item-detail-properties-value").text.strip()
+            brand = prop_value.strip()
         elif prop_name == "Защитный слой, мм":
-            safe_layer = float(prop.find(class_="product-item-detail-properties-value").text.replace(",", "."))
+            safe_layer = float(prop_value.replace(",", "."))
         elif prop_name == "Ширина, см":
-            width = int(prop.find(class_="product-item-detail-properties-value").text)
+            width = int(prop_value)
         elif prop_name == "Класс пожарной опасности":
-            fire_safety_class = prop.find(class_="product-item-detail-properties-value").text.strip()
+            fire_safety_class = prop_value.strip()
     image_url = f"https://polov.net{soup.find(class_="product-item-detail-slider-image").find("img").get("src")}"
 
     data = [name, price, width, thickness, safe_layer, fire_safety_class, brand, url, image_url]
